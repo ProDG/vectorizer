@@ -3,7 +3,7 @@ from typing import List
 from fastapi import UploadFile
 from pydantic import BaseModel
 
-from defs import TransformerModel, CalculationDevice
+from app.core.defs import TransformerModel, CalculationDevice
 
 
 class TextPayload(BaseModel):
