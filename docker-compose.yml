@@ -1,0 +1,3 @@
+services:
+  puller:
+    container_name: git_puller
