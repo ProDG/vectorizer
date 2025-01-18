@@ -1,3 +1,28 @@
 services:
-  puller:
-    container_name: git_puller
+  vectorizer:
+    container_name: vectorizer
+    build: .
+    deploy:
+      resources:
+        reservations:
+          devices:
+            - driver: nvidia
+              count: all
+              capabilities:
+                - gpu
+    command: uvicorn app.main:app --host 0.0.0.0 --port 80
+    restart: always
+    ports:
+      - "${PORT}:80"
+    env_file:
+      - .env
+    networks:
+      - traefik
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.vectorizer.rule=Host(`${HOST}`)"
+      - "traefik.http.routers.vectorizer.entrypoints=web"
+
+networks:
+  traefik:
+    external: true
